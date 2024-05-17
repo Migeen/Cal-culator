@@ -1,7 +1,58 @@
-const btns = document.querySelectorAll('.buttons');
+const btns = document.querySelectorAll('#buttons');
 const display = document.querySelector('.display');
-let input = '';
+const clearBtn = document.querySelector('#ac'); 
+const delBtn = document.querySelector('#del');
+const opBtns = document.querySelectorAll('#operator');
+let currentInput = '';
+let previousInput = '';
 let operator = null;
+let shouldResetDisp = false;
+let calcFinished = false;
+
+const updateDisplay = (value) =>{
+    display.textContent = value;
+}
+
+const clear = ()=>{
+    currentInput ='';
+    previousInput = '';
+    operator = null;
+    shouldResetDisp = false;
+    calcFinished = false;
+
+    updateDisplay(currentInput);
+}
+
+const appendNum = (num) =>{
+    if(currentInput === '' || calcFinished || shouldResetDisp){
+        currentInput = num;
+        shouldResetDisp = false;
+        calcFinished = false;
+        updateDisplay(currentInput);        
+    }else{
+        currentInput += num; 
+    }
+
+    updateDisplay(currentInput);
+}
+
+const deleteNum = () => {
+    currentInput = currentInput.slice(0,-1); 
+
+    updateDisplay(currentInput);
+}
+
+
+const chooseOperator = (newOperator) =>{
+    if(operator !=null && !shouldResetDisp){
+        operate();
+    }
+    previousInput = currentInput;
+    operator = newOperator;
+    shouldResetDisp = true;
+    calcFinished = false;
+}
+
 let sum =function(a,b){
     return a+b;
 }
@@ -33,23 +84,12 @@ let operate = (x,y,operator)=>{
     }
 }
 
-const handleNUm = function(val){
-    if(input===''){
-        input=val;
-    }else{
-        input+=value;
-    }
-
-}
-
-
-btns.forEach((btn) => {
-    btn.addEventListener('click',function(){
-        const value = btn.textContent;
-
-        if(value >=0 && value<=9){
-            return handleNUm(value);
-        }
-        display.textContent = value;
-    })
+btns.forEach((btn)=>{
+    btn.addEventListener('click', function(){
+        const val = btn.textContent;
+        appendNum(val);
+    });
 });
+
+clearBtn.addEventListener('click',clear);
+delBtn.addEventListener('click',deleteNum);

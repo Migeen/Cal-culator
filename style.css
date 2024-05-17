@@ -36,18 +36,26 @@ h1{
     background-color: lightblue;
     border: 1px solid rgb(184, 182, 182);
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 20px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: black;
 }
 
 button{
     height: 60px;
     width: 60px;
     background-color: white;
+    font-size: large;
     /* text-align: center; */
     border-radius: 3px;
 }
 
 .red{
-    background-color: rgb(248, 124, 53);
+    background-color: rgb(228, 114, 49);
     color: #FFFFFF;
 }
 
